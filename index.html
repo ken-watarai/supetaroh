@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ソースコード見てないで論文読めよ
+
+ぶっとばすぞ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>半角スぺ太郎</title>
+    <link rel="icon" type="image/x-icon" href="su.png">
+</head>
+<!-- あとで色を変えるものは色埋め込み -->
+<body style="background-color: #e7e7e7;">
+
+    <header>
+        <a href="description.html">半角スペ太郎<span>とは　　　　　全ての悩める論文読者へ</span></a>
+    </header>
+
+    <div class="container">
+
+        <div class="surArea">
+            <textarea name="textarea1" id="area" cols="50" rows="19" placeholder="ペーストしてGoogle翻訳&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;注意：「半角スぺ太郎」はあなたの英語力を著しく低下させる恐れがあります。"></textarea>
+        </div>
+            
+        <div class="bottomArea">
+            <div class="btnArea">
+                <input type="button" value="Google 翻訳" class="btn" id="btn" onclick="Btn1()"/> 
+                <div class="switch switch1">
+                    <label class="switch__label">
+                        <input type="checkbox" class="switch__input" id="switch" checked="checked"/><!--初期チェック状態-->
+                        <span class="switch__content"></span>
+                        <span class="switch__circle"></span>
+                    </label>
+                    <p>Auto</p>
+                    <div class="balloon balloon1">ペーストと同時に翻訳サイトを開きます</div>
+                </div>
+                
+            </div>    
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+    let flag = 0; // 0=google 1=DeepL 切り替え
+
+    const area = document.getElementById("area");
+    const autoSwitch  =  document.getElementById("switch");
+    const roughSwitch =  document.getElementById("rough");
+
+    const btn = document.getElementById("btn");
+
+    //google翻訳
+    function google(original) {                          
+        //バグ取り
+        let arranged = original.replace(/%/g, " percent"); 
+        //google翻訳を開く
+        window.open("https://translate.google.co.jp/#view=home&op=translate&sl=en&tl=ja&text=" + arranged);
+    }
+    //DeepL
+    function DeepL(original) {                          
+        //バグ取り
+        let arranged = original.replace(/%/g, " percent"); 
+        arranged = original.replace(/,/g, "%2C"); 
+        //google翻訳を開く
+        window.open("https://www.deepl.com/ja/translator#en/ja/" + arranged);
+    }
+
+    function Btn1(){
+        const ta1 = area.value;    //取得
+        let original = ta1.replace(/\n/g, " ");            //すべての\nをreplace, この時点でやらないとarea反映時面倒
+        
+        area.value = original;     //テキストエリアの文字を変更
+        area.select();             //テキストを全選択
+
+        //検索 flagでgoogleとDeepL 分ける
+        if (flag == 0){
+            google(original)
+        } else {
+            DeepL(original)
+        }
+    }
+
+    area.addEventListener("paste", function() {              //ペースト時にググる
+        if (autoSwitch.checked) {                            //チェックボックスがonなら実行
+            setTimeout(Btn1, 100);
+        }
+    },false);
+    
+    //モードチェンジ
+    document.body.addEventListener("dblclick", function() {              //モードチェンジ　ほぼCSS
+        if (flag == 0){
+            document.body.style.backgroundColor = "#888888";
+            area.style.backgroundColor = "#3f3f3f";
+            area.placeholder = "ペーストしてDeepL 翻訳";
+            area.style.color = "white";
+            btn.value = "DeepL翻訳";
+            document.title = "裏スぺ太郎";
+            flag = 1;
+        } else {
+            document.body.style.backgroundColor = "#e7e7e7";
+            area.style.backgroundColor = "white";
+            area.placeholder = "ペーストしてGoogle 翻訳";
+            area.style.color = "black";
+            btn.value = "Google翻訳";
+            document.title = "半角スぺ太郎";
+            flag = 0;
+        }
+        area.select();
+    }); 
+    
+    area.select();               //初期状態
+</script>
+
+</body>
+</html>
+
