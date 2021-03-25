@@ -24,9 +24,6 @@ header span {
 	font-style: italic;
 	font-size: 16px;
 }
-.narrow-hidden {
-	margin-left: 50px;
-}
 
 .container {
     /* background-color: rgb(109, 160, 160); */
@@ -235,9 +232,6 @@ img {
 	header {
 		padding-left: 0;
 		text-align: center;
-	}
-	.narrow-hidden {
-		display: none;
 	}
 	#area {width: 350px}
 }
